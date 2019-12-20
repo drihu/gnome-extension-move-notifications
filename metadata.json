@@ -1,0 +1,6 @@
+{
+  "name": "Gnome Extension Move Notifications",
+  "description": "Change Gnome Notifications Position Horizontally and Vertically",
+  "uuid": "gnome-extension-move-notifications",
+  "shell-version": ["3.28.4"]
+}

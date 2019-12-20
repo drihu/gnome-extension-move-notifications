@@ -1,0 +1,21 @@
+{
+  "name": "gnome-extension-move-notifications",
+  "version": "0.1.0",
+  "description": "Change Gnome Notifications Position Horizontally and Vertically",
+  "main": "extension.js",
+  "scripts": {
+    "commit": "git-cz",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ricardo Huamani <ricardohuamanip@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.0.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
