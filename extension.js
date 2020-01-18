@@ -1,6 +1,5 @@
 const { Clutter, St, GLib } = imports.gi;
 const { main: Main, panelMenu: PanelMenu, popupMenu: PopupMenu } = imports.ui;
-const Lang = imports.lang;
 const Tweener = imports.ui.tweener;
 
 let menuButton = null;
