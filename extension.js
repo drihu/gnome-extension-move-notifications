@@ -3,6 +3,13 @@ const { main: Main, panelMenu: PanelMenu, popupMenu: PopupMenu } = imports.ui;
 const Tweener = imports.ui.tweener;
 
 let menuButton = null;
+let configSampleFile = GLib.get_current_dir()
+  .concat('/')
+  .concat('.local/share/gnome-shell/extensions')
+  .concat('/')
+  .concat('gnome-extension-move-notifications')
+  .concat('/')
+  .concat('.config.sample.json');
 let configFile = GLib.get_current_dir()
   .concat('/')
   .concat('.local/share/gnome-shell/extensions')
@@ -89,6 +96,12 @@ function _showHello() {
 }
 
 function init() {
+  // If the Config File does not exist, creates it as a copy of Config Sample
+  if (!GLib.file_test(configFile, GLib.FileTest.IS_REGULAR)) {
+    const configSampleFileContent = String(GLib.file_get_contents(configSampleFile)[1]);
+    GLib.file_set_contents(configFile, configSampleFileContent);
+  }
+
   let position = _getPosition();
   Main.messageTray._bannerBin.set_x_align(Clutter.ActorAlign[position.x]);
   Main.messageTray._bannerBin.set_y_align(Clutter.ActorAlign[position.y]);
