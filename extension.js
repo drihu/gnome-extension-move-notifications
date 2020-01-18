@@ -1,6 +1,5 @@
 const { Clutter, St, GLib } = imports.gi;
 const { main: Main, panelMenu: PanelMenu, popupMenu: PopupMenu } = imports.ui;
-const Tweener = imports.ui.tweener;
 
 let menuButton = null;
 let configSampleFile = GLib.get_current_dir()
@@ -62,39 +61,6 @@ function _moveNotificationTo(axis, align) {
   }
 }
 
-let text, button;
-
-function _hideHello() {
-  Main.uiGroup.remove_actor(text);
-  text = null;
-}
-
-function _showHello() {
-  let monitor = Main.layoutManager.primaryMonitor;
-
-  if (!text) {
-    text = new St.Label({
-      style_class: 'helloworld-label',
-      text: JSON.stringify(_getPosition()),
-    });
-    Main.uiGroup.add_actor(text);
-  }
-
-  text.opacity = 255;
-
-  text.set_position(
-    monitor.x + Math.floor(monitor.width / 2 - text.width / 2),
-    monitor.y + Math.floor(monitor.height / 2 - text.height / 2),
-  );
-
-  Tweener.addTween(text, {
-    opacity: 0,
-    time: 2,
-    transition: 'easeOutQuad',
-    onComplete: _hideHello,
-  });
-}
-
 function init() {
   // If the Config File does not exist, creates it as a copy of Config Sample
   if (!GLib.file_test(configFile, GLib.FileTest.IS_REGULAR)) {
@@ -102,26 +68,10 @@ function init() {
     GLib.file_set_contents(configFile, configSampleFileContent);
   }
 
+  // Set the notifications position from Config File
   let position = _getPosition();
   Main.messageTray._bannerBin.set_x_align(Clutter.ActorAlign[position.x]);
   Main.messageTray._bannerBin.set_y_align(Clutter.ActorAlign[position.y]);
-
-  button = new St.Bin({
-    style_class: 'panel-button',
-    reactive: true,
-    can_focus: true,
-    x_fill: true,
-    y_fill: false,
-    track_hover: true,
-  });
-
-  let icon = new St.Icon({
-    icon_name: 'system-run-symbolic',
-    style_class: 'system-status-icon',
-  });
-
-  button.set_child(icon);
-  button.connect('button-press-event', _showHello);
 }
 
 function enable() {
@@ -175,10 +125,8 @@ function enable() {
   optionBottom.actor.connect('button-press-event', _moveNotificationTo('y', 'END'));
 
   Main.panel.addToStatusArea('MoveNotificationsMenu', menuButton, 0);
-  Main.panel._rightBox.insert_child_at_index(button, 0);
 }
 
 function disable() {
   menuButton.destroy();
-  Main.panel._rightBox.remove_child(button);
 }
