@@ -69,8 +69,6 @@ function _showHello() {
   if (!text) {
     text = new St.Label({
       style_class: 'helloworld-label',
-      //text: typeof(GLib.get_current_dir),
-      //text: 'hello',
       text: JSON.stringify(_getPosition()),
     });
     Main.uiGroup.add_actor(text);
