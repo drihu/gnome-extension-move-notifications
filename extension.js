@@ -61,17 +61,21 @@ function _moveNotificationTo(axis, align) {
   }
 }
 
+/**
+ * Set the Notifications Position from Config File
+ */
+function _initConfig() {
+  let position = _getPosition();
+  Main.messageTray._bannerBin.set_x_align(Clutter.ActorAlign[position.x]);
+  Main.messageTray._bannerBin.set_y_align(Clutter.ActorAlign[position.y]);
+}
+
 function init() {
   // If the Config File does not exist, creates it as a copy of Config Sample
   if (!GLib.file_test(configFile, GLib.FileTest.IS_REGULAR)) {
     const configSampleFileContent = String(GLib.file_get_contents(configSampleFile)[1]);
     GLib.file_set_contents(configFile, configSampleFileContent);
   }
-
-  // Set the notifications position from Config File
-  let position = _getPosition();
-  Main.messageTray._bannerBin.set_x_align(Clutter.ActorAlign[position.x]);
-  Main.messageTray._bannerBin.set_y_align(Clutter.ActorAlign[position.y]);
 }
 
 function enable() {
@@ -125,6 +129,7 @@ function enable() {
   optionBottom.actor.connect('button-press-event', _moveNotificationTo('y', 'END'));
 
   Main.panel.addToStatusArea('MoveNotificationsMenu', menuButton, 0);
+  _initConfig();
 }
 
 function disable() {
