@@ -16,7 +16,13 @@ Open the Gnome Extensions Window
 gnome-shell-extension-prefs
 ```
 
-Enable the Move Notifications Extension. Then reload Gnome Shell pressing Alt+F2, type "r" and press Enter.
+Enable the Move Notifications Extension. If you can't see a screw button in the right side from the top taskbar, then reload Gnome Shell pressing Alt+F2, type "r" and press Enter.
+
+## Usage
+
+Click the screw button in the taskbar and choose the new position for the system notifications.
+
+You can choose between position X (Left, Center or Right) and Y (Top, Middle or Bottom).
 
 ## License
 
